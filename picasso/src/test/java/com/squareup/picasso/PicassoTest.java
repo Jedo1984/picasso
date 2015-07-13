@@ -550,7 +550,7 @@ public class PicassoTest {
 
   @Test public void invalidateFile() {
     picasso.invalidate(new File("/foo/bar/baz"));
-    verify(cache).clearKeyUri("file:///foo/bar/baz");
+    verify(cache).clearKeyUri("file://c%3A%5Cfoo%5Cbar%5Cbaz");
   }
 
   @Test public void invalidateUri() {

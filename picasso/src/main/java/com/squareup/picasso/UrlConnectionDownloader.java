@@ -23,6 +23,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLEncoder;
+import java.io.UnsupportedEncodingException;
 
 import static com.squareup.picasso.Utils.parseResponseSourceHeader;
 
@@ -60,6 +64,23 @@ public class UrlConnectionDownloader implements Downloader {
   @Override public Response load(Uri uri, int networkPolicy) throws IOException {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
       installCacheIfNeeded(context);
+    }
+    
+    if ("http".equals(uri.getScheme()) || "https".equals(uri.getScheme())) {
+        String path = uri.toString();
+        String encodedPath = path;
+        int pos = path.lastIndexOf('/') + 1;
+        int end = path.lastIndexOf('?');
+        if (end < 0)
+            end = path.length();
+        URI temp = null;
+        try {
+            temp = new URI(path.substring(0, pos) + URLEncoder.encode(path.substring(pos, end), "UTF-8"));
+            encodedPath = temp.toString();
+        } catch (UnsupportedEncodingException e) {
+        } catch (URISyntaxException e) {
+        }
+        uri = Uri.parse(encodedPath);
     }
 
     HttpURLConnection connection = openConnection(uri);
