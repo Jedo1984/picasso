@@ -30,7 +30,10 @@ public enum NetworkPolicy {
   NO_STORE(1 << 1),
 
   /** Forces the request through the disk cache only, skipping network. */
-  OFFLINE(1 << 2);
+  OFFLINE(1 << 2),
+  
+  /** Forces the request through the disk cache only, skipping network. */
+  TIMEOUT(1 << 3);
 
   public static boolean shouldReadFromDiskCache(int networkPolicy) {
     return (networkPolicy & NetworkPolicy.NO_CACHE.index) == 0;
@@ -42,6 +45,10 @@ public enum NetworkPolicy {
 
   public static boolean isOfflineOnly(int networkPolicy) {
     return (networkPolicy & NetworkPolicy.OFFLINE.index) != 0;
+  }
+  
+  public static boolean isTimeoutOnly(int networkPolicy) {
+    return (networkPolicy & NetworkPolicy.TIMEOUT.index) != 0;
   }
 
   final int index;
