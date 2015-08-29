@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.concurrent.ExecutorService;
+import android.text.TextUtils;
 
 import static android.os.Process.THREAD_PRIORITY_BACKGROUND;
 import static com.squareup.picasso.Action.RequestWeakReference;
@@ -304,11 +305,8 @@ public class Picasso {
    * @throws IllegalArgumentException if {@code path} is empty or blank string.
    */
   public RequestCreator load(String path) {
-    if (path == null) {
+    if (TextUtils.isEmpty(path)) {
       return new RequestCreator(this, null, 0);
-    }
-    if (path.trim().length() == 0) {
-      throw new IllegalArgumentException("Path must not be empty.");
     }
     return load(Uri.parse(path));
   }
