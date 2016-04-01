@@ -25,12 +25,16 @@ import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
+import java.util.concurrent.TimeUnit;
 
 /** A {@link Downloader} which uses OkHttp to download images. */
 public final class OkHttp3Downloader implements Downloader {
   private final Call.Factory client;
   private final Cache cache;
 
+  private static final CacheControl TIMEOUT = new CacheControl.Builder()
+      .maxStale(60, TimeUnit.SECONDS)
+      .build();
   /**
    * Create new downloader that uses OkHttp. This will install an image cache into your application
    * cache directory.
@@ -88,7 +92,9 @@ public final class OkHttp3Downloader implements Downloader {
   @Override public Response load(Uri uri, int networkPolicy) throws IOException {
     CacheControl cacheControl = null;
     if (networkPolicy != 0) {
-      if (NetworkPolicy.isOfflineOnly(networkPolicy)) {
+      if (NetworkPolicy.isTimeoutOnly(networkPolicy)) {
+        cacheControl = TIMEOUT;
+      } else if (NetworkPolicy.isOfflineOnly(networkPolicy)) {
         cacheControl = CacheControl.FORCE_CACHE;
       } else {
         CacheControl.Builder builder = new CacheControl.Builder();

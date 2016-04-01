@@ -34,8 +34,8 @@ public class OkHttpDownloader implements Downloader {
     client.setWriteTimeout(Utils.DEFAULT_WRITE_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
     return client;
   }
-  
-  
+
+
   private static final CacheControl TIMEOUT = new CacheControl.Builder()
       .maxStale(60, TimeUnit.SECONDS)
       .build();
@@ -98,7 +98,7 @@ public class OkHttpDownloader implements Downloader {
     CacheControl cacheControl = null;
     if (networkPolicy != 0) {
       if (NetworkPolicy.isTimeoutOnly(networkPolicy)) {
-        cacheControl = TIMEOUT;  
+        cacheControl = TIMEOUT;
       } else if (NetworkPolicy.isOfflineOnly(networkPolicy)) {
         cacheControl = CacheControl.FORCE_CACHE;
       } else {

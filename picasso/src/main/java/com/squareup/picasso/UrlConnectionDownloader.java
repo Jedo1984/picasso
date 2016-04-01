@@ -65,7 +65,7 @@ public class UrlConnectionDownloader implements Downloader {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
       installCacheIfNeeded(context);
     }
-    
+
     if ("http".equals(uri.getScheme()) || "https".equals(uri.getScheme())) {
         String path = uri.toString();
         String encodedPath = path;
@@ -75,7 +75,8 @@ public class UrlConnectionDownloader implements Downloader {
             end = path.length();
         URI temp = null;
         try {
-            temp = new URI(path.substring(0, pos) + URLEncoder.encode(path.substring(pos, end), "UTF-8"));
+            temp = new URI(path.substring(0, pos)
+                + URLEncoder.encode(path.substring(pos, end), "UTF-8"));
             encodedPath = temp.toString();
         } catch (UnsupportedEncodingException e) {
         } catch (URISyntaxException e) {

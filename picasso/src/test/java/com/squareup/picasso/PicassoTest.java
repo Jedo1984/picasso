@@ -423,16 +423,6 @@ public class PicassoTest {
 
   @Test public void loadThrowsWithInvalidInput() {
     try {
-      picasso.load("");
-      fail("Empty URL should throw exception.");
-    } catch (IllegalArgumentException expected) {
-    }
-    try {
-      picasso.load("      ");
-      fail("Empty URL should throw exception.");
-    } catch (IllegalArgumentException expected) {
-    }
-    try {
       picasso.load(0);
       fail("Zero resourceId should throw exception.");
     } catch (IllegalArgumentException expected) {
@@ -550,7 +540,7 @@ public class PicassoTest {
 
   @Test public void invalidateFile() {
     picasso.invalidate(new File("/foo/bar/baz"));
-    verify(cache).clearKeyUri("file://c%3A%5Cfoo%5Cbar%5Cbaz");
+    verify(cache).clearKeyUri("file://C%3A%5Cfoo%5Cbar%5Cbaz");
   }
 
   @Test public void invalidateUri() {

@@ -31,7 +31,7 @@ public enum NetworkPolicy {
 
   /** Forces the request through the disk cache only, skipping network. */
   OFFLINE(1 << 2),
-  
+
   /** Forces the request through the disk cache only, skipping network. */
   TIMEOUT(1 << 3);
 
@@ -46,7 +46,7 @@ public enum NetworkPolicy {
   public static boolean isOfflineOnly(int networkPolicy) {
     return (networkPolicy & NetworkPolicy.OFFLINE.index) != 0;
   }
-  
+
   public static boolean isTimeoutOnly(int networkPolicy) {
     return (networkPolicy & NetworkPolicy.TIMEOUT.index) != 0;
   }
